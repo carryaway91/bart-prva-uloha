@@ -1,32 +1,34 @@
-// svk, cze, mag, pl, au
-const STATE_CODES = [
-  "+421",
-  "00421",
-  "+420",
-  "00420",
-  "+36",
-  "0036",
-  "+48",
-  "0048",
-  "+380",
-  "00380",
-  "+43",
-  "0043",
-];
+const removeCodeBeforeSlash = (phoneNr: string): string => {
+  phoneNr = phoneNr.substring(phoneNr.indexOf("/") + 1, phoneNr.length);
+  return phoneNr;
+};
 
 exports.phoneNrsAreEqual = (userNr: string, dbNr: string): boolean => {
-  const userNrsTrimmed = userNr.trim();
-  const dbNrsTrimmed = dbNr.trim();
-  let userResultNr = userNrsTrimmed.replace(/-|[()|_|.|/| ]/g, "");
-  let dbResultNr = dbNrsTrimmed.replace(/-|[()|_|.|/| ] /g, "");
+  if (userNr === "" || dbNr === "") {
+    return false;
+  }
+  let userNrsTrimmed = userNr.trim();
+  let dbNrsTrimmed = dbNr.trim();
 
-  STATE_CODES.map((code) => {
-    if (userResultNr.includes(code)) {
-      userResultNr = userResultNr.replace(code, "");
-    }
-  });
+  //odstrani predvolbu, ktora je pred slashom
+  userNrsTrimmed = removeCodeBeforeSlash(userNrsTrimmed);
+  dbNrsTrimmed = removeCodeBeforeSlash(dbNrsTrimmed);
 
-  if (dbResultNr.includes(userResultNr)) {
+  const regex = /-|[()|_|.|+| ]/g;
+
+  let userResultNr = userNrsTrimmed.replace(regex, "");
+  let dbResultNr = dbNrsTrimmed.replace(regex, "");
+
+  /* odstrani 00 z medzinarodnych predvolieb */
+  if (dbResultNr.startsWith("00")) {
+    dbResultNr = dbResultNr.slice(2, dbResultNr.length);
+  }
+  /* odstrani 0 na zaciatku(pretoze 0 sa na zaciatku v cislach s predvolbou nenachadza) */
+  if (dbResultNr.startsWith("0")) {
+    dbResultNr = dbResultNr.slice(1, dbResultNr.length);
+  }
+
+  if (userResultNr.includes(dbResultNr)) {
     return true;
   }
 
