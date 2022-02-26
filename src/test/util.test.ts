@@ -1,6 +1,28 @@
 const { phoneNrsAreEqual } = require("../app/util");
 
+const phoneNumbers = [
+  ["0911918548", "0911918548"],
+  ["44 676 92", "+053/44 676 92"],
+  ["+053/44 676 92", "4467692"],
+  ["+1 - 205 563842", "001 - 205 563842"],
+  ["  0911 918 5 4 8", "0911918548"],
+  ["0911-918-548", "0911918548"],
+  ["0911_918_548", "0911918548"],
+  ["0911.918.548", "0911918548"],
+  ["+421911918548", "0911918548"],
+  ["00421911918547", "0911918547"],
+  ["(+421)911918547", "0911918547"],
+  ["0911918547", "911918547"],
+  ["(+421)/9-11 918-548", "0911918548"],
+];
 describe("phone numbers are equal", () => {
+  test("Phone number doubles are equal", () => {
+    phoneNumbers.forEach((doubles) => {
+      const result = phoneNrsAreEqual(doubles[0], doubles[1]);
+      expect(result).toBe(true);
+    });
+  });
+
   test("phone number is equal", () => {
     const result = phoneNrsAreEqual("0911918548", "0911918548");
     expect(result).toBe(true);
@@ -56,7 +78,7 @@ describe("phone numbers are equal", () => {
     expect(result).toBe(true);
   });
 
-  test("phone number withou 0 at the beginning", () => {
+  test("phone number without 0 at the beginning", () => {
     const result = phoneNrsAreEqual("0911918547", "911918547");
     expect(result).toBe(true);
   });
