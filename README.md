@@ -1,5 +1,8 @@
 ﻿# bart-prva-druha-uloha
 
+## Popis projektu
+Projekt testuje to, či sú dve telefónne čísla rovnaké. Porovnáva sa číslo, ktoré zadá user s číslom v databáze.
+
 ## Inštalácia
 Do terminálu napíš príkaz:
 ```bash
@@ -10,9 +13,6 @@ Na sputenie testu zadaj príkaz:
 ```bash
 npm test
 ```
-
-## Popis projektu
-Projekt testuje to, či sú dve telefónne čísla rovnaké. Porovnáva sa číslo, ktoré zadá user s číslom v databáze.
 
 ## Zmeny v projekte
   1. Pridané testy na kontrolovanie false prípadov
@@ -26,3 +26,6 @@ Projekt testuje to, či sú dve telefónne čísla rovnaké. Porovnáva sa čís
 Pridal som do porovnávania aj tebou stanovené čisla. Teraz fungujú.
 Čo sa týka toho poľa rôznych čiselných dvojíc, neviem či si to myslel takto, preto som ponechal aj staré riešenie. Test s dvojicami čísel z poľa
 je hneď prvý s názvom "Phone number doubles are equal".
+
+## Použité technológie
+typescript, jest
